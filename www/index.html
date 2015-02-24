@@ -21,7 +21,10 @@
 		var vStrDia = vDia.getDate() + "/" + ("0" + (vDia.getMonth() + 1)).slice(-2) + "/" + vDia.getFullYear()
 
 		$("#divMainHeader > h1").html(vStrDia);
-		$.mobile.changePage( $("#main"), "slide", true, true);
+		$.mobile.changePage($("#main"), {
+		    changeHash: false,
+		    transition: "slideup"
+		});
 
 	}
 </script>

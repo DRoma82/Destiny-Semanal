@@ -7,23 +7,39 @@
 <script type="text/javascript" charset="utf-8" src="jquery/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="jquery/jquery.mobile-1.4.5.min.js"></script>
 <link rel="stylesheet" type="text/css" href="jquery/jquery.mobile-1.4.5.min.css"/>
+<link rel="stylesheet" type="text/css" href="index.css"/>
 <script type="text/javascript" charset="utf-8">
 
 	document.addEventListener("deviceready", onDeviceReady, false);
 	function onDeviceReady()
 	{
+		var vDia = new Date();
+		var vDif = (vDia.getDay() + 5) % 7;
+		vDia = new Date(vDia - vDif * 24*60*60*1000);
+		vDia.setHours(0,0,0);
+
+		var vStrDia = vDia.getDate() + "/" + ("0" + (vDia.getMonth() + 1)).slice(-2) + "/" + vDia.getFullYear()
+
+		$("#divMainHeader > h1").html(vStrDia);
+		$.mobile.changePage( $("#main"), "slide", true, true);
 
 	}
 </script>
 </head>
 <body>
+
+	<div data-role="page" id="loading">
+		<h1>Destiny Semanal</h1>
+        <h2>Carregando...</h2>
+	</div>
+
 	<div data-role="page" id="main">
-		<div data-role="header">
-			<h1>Teste App Android</h1>
+		<div id="divMainHeader" data-role="header">
+			<h1>Destiny Semanal</h1>
 		</div>
 
 		<div id="content" data-role="content">
-			Oi Kidd!<br />
+			Oi Kidd!!<br />
 			<br />
 			<a href="#pagina_2" data-transition="flip" class="ui-btn ui-corner-all ui-shadow">Ver segunda tela</a>
 		</div>

@@ -40,7 +40,7 @@ $(function () {
     vAtheon.AdicionarLinha('Górgonas 1', 0, 'AtheonGorgonas1', 26, 'AtheonGorgonas1', 30);
     vAtheon.AdicionarLinha('Górgonas 2', 0, 'AtheonGorgonas2', 26, 'AtheonGorgonas2', 30);
     vAtheon.AdicionarLinha('Portais', 0, 'AtheonPortais', 26, 'AtheonPortais', 30);
-    vAtheon.AdicionarLinha('Atheon', 0, 'Atheon', 26, 'Atheon', 30);
+    vAtheon.AdicionarLinha('Atheon', 0, 'AtheonAtheon', 26, 'AtheonAtheon', 30);
     vMainConteudo.append(vAtheon);
 
     var vCrota = fnCriarGrupo("O Fim de Crota");
@@ -48,8 +48,8 @@ $(function () {
     vCrota.AdicionarLinha('O Abismo', 0, 'CrotaAbismo', 30, 'CrotaAbismo', 33);
     vCrota.AdicionarLinha('A Ponte', 0, 'CrotaPonte', 30, 'CrotaPonte', 33);
     vCrota.AdicionarLinha('Baú do Corredor', 0, 'CrotaBau2', 30, null, 33);
-    vCrota.AdicionarLinha('Cantora da Morte', 0, 'CrotaBruxa', 30, null, 33);
-    vCrota.AdicionarLinha('Crota', 0, 'Crota', 30, 'Crota', 33);
+    vCrota.AdicionarLinha('Cantora', 0, 'CrotaBruxa', 30, null, 33);
+    vCrota.AdicionarLinha('Crota', 0, 'CrotaCrota', 30, 'CrotaCrota', 33);
     vMainConteudo.append(vCrota);
 
     vMainConteudo.trigger('create');

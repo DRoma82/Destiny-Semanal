@@ -31,6 +31,11 @@
 	{
 	    $.mobile.changePage($("#pagConfigChars"), { transition: "flip" });
 	}
+
+	function fnSaveChars()
+	{
+	    $.mobile.changePage($("#pagMain"), { transition: "flip" });
+	}
 </script>
 </head>
 <body>
@@ -66,12 +71,62 @@
 
 	<div data-role="page" data-add-back-btn="true" data-back-btn-text="Back" id="pagConfigChars">
 		<div data-role="header">
-			<a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button">Back</a>
-			<h1>Configurar Personagens</h1>
+            <a id="btnCharsVoltar" href="#pagMain" data-transition="flip" class="ui-btn ui-icon-back ui-btn-icon-notext ui-corner-all ui-btn-left ui-mini">Salvar</a>
+			<h1>Personagens</h1>
+            <button id="btnSaveChars" onclick="fnSaveChars();" class="ui-btn ui-icon-check ui-btn-icon-notext ui-corner-all ui-btn-right ui-mini">Salvar</button>
 		</div>
 
 		<div id="content" data-role="content">
-			Esta é a Segunda Tela
+			
+            <div>
+                <div class="=ui-bar ui-bar-a">
+                    <h3 style="margin-left: 20px;">Char 1</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                    <input type="text" id="txtNome1" placeholder="Nome Customizado" />
+
+                    <select id="ddlClasse1" data-native-menu="false">
+                        <option value="" data-placeholder="true">Classe:</option>
+                        <option value="T">Titã</option>
+                        <option value="C">Caçador</option>
+                        <option value="A">Arcano</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="=ui-bar ui-bar-a">
+                    <h3 style="margin-left: 20px;">Char 2</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                    <input type="text" id="txtNome2" placeholder="Nome Customizado" />
+
+                    <select id="ddlClasse2" data-native-menu="false">
+                        <option value="" data-placeholder="true">Classe:</option>
+                        <option value="T">Titã</option>
+                        <option value="C">Caçador</option>
+                        <option value="A">Arcano</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="=ui-bar ui-bar-a">
+                    <h3 style="margin-left: 20px;">Char 3</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                    <input type="text" id="txtNome3" placeholder="Nome Customizado" />
+
+                    <select id="ddlClasse3" data-native-menu="false">
+                        <option value="" data-placeholder="true">Classe:</option>
+                        <option value="T">Titã</option>
+                        <option value="C">Caçador</option>
+                        <option value="A">Arcano</option>
+                    </select>
+                </div>
+            </div>
+            
+
 		</div>
 	</div>
 </body>

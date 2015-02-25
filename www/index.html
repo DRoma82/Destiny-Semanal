@@ -54,7 +54,6 @@
 
 		<div id="content" data-role="content">
             <div>
-
                 <div style="float: left; margin-right: 10px;">
                     <input type="button" id="btnConfigChars" onclick="fnConfigChars();" data-icon="gear" data-iconpos="notext" data-inline="true" value="Configurar Personagens" />
                 </div>
@@ -66,8 +65,42 @@
                     </select>
                 </div>
             </div>
-		</div>
-	</div>
+
+            <div>
+                <div class="=ui-bar ui-bar-a">
+                    <h3 style="margin-left: 20px;">Anoitecer</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                    <div class="div3Colunas">
+                        &nbsp;
+                    </div>
+                    <div class="div3Colunas">
+                        &nbsp;
+                    </div>
+                    <div class="div3Colunas">
+                        <input type="checkbox" data-role="flipswitch" id="chkAnoitecer" data-on-text="30" data-off-text="30" data-wrapper-class="custom-label-flipswitch" data-mini="true">
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="=ui-bar ui-bar-a">
+                    <h3 style="margin-left: 20px;">Semanal</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                    <div class="div3Colunas">
+                        <input type="checkbox" data-role="flipswitch" id="chkSemanal24" data-on-text="24" data-off-text="24" data-wrapper-class="custom-label-flipswitch" data-mini="true">
+                    </div>
+                    <div class="div3Colunas">
+                        <input type="checkbox" data-role="flipswitch" id="chkSemanal28" data-on-text="28" data-off-text="28" data-wrapper-class="custom-label-flipswitch" data-mini="true">
+                    </div>
+                    <div class="div3Colunas">
+                        <input type="checkbox" data-role="flipswitch" id="chkSemanal30" data-on-text="30" data-off-text="30" data-wrapper-class="custom-label-flipswitch" data-mini="true">
+                    </div>
+                </div>
+            </div>
+	    </div>
+    </div>
 
 	<div data-role="page" data-add-back-btn="true" data-back-btn-text="Back" id="pagConfigChars">
 		<div data-role="header">

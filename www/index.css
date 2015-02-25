@@ -6,6 +6,11 @@
     padding-top: 100px;
 }
 
+.div3Colunas
+{
+    float: left; width: 33%; text-align: center;
+}
+
 .ui-controlgroup-controls
 {
     width:100%;

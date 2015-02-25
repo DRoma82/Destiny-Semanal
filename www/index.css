@@ -8,7 +8,10 @@
 
 .div3Colunas
 {
-    float: left; width: 33%; text-align: center;
+    float: left; 
+    width: 33%; 
+    text-align: center;
+    line-height: 40px;
 }
 
 .ui-controlgroup-controls

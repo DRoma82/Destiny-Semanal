@@ -20,21 +20,20 @@
 
 		var vStrDia = vDia.getDate() + "/" + ("0" + (vDia.getMonth() + 1)).slice(-2) + "/" + vDia.getFullYear()
 
-		$("#divMainHeader > h1").html(vStrDia);
-		$.mobile.changePage($("#main"), {
-		    changeHash: false,
-		    transition: "slideup"
-		});
+		//$.mobile.changePage($("#main"), {
+		//    changeHash: false,
+		//    transition: "slideup"
+		//});
 
 	}
 </script>
 </head>
 <body>
 
-	<div data-role="page" id="loading">
+	<!--<div data-role="page" id="loading">
 		<h1>Destiny Semanal</h1>
         <h2>Carregando...</h2>
-	</div>
+	</div>-->
 
 	<div data-role="page" id="main">
 		<div id="divMainHeader" data-role="header">
@@ -42,7 +41,11 @@
 		</div>
 
 		<div id="content" data-role="content">
-			Oi Kidd!!<br />
+            <select id="ddlChar" data-native-menu="false">
+                <option value="1">Char 1</option>
+                <option value="2">Char 2</option>
+                <option value="3">Char 3</option>
+            </select>
 			<br />
 			<a href="#pagina_2" data-transition="flip" class="ui-btn ui-corner-all ui-shadow">Ver segunda tela</a>
 		</div>

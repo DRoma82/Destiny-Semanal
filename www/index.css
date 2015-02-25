@@ -5,3 +5,17 @@
     background: linear-gradient(to top, #666666, #CCCCCC);
     padding-top: 100px;
 }
+
+.ui-controlgroup-controls
+{
+    width:100%;
+    
+}
+.ui-radio {
+    width:33%;
+}
+
+.ui-radio > label
+]{
+    text-align: center;
+}

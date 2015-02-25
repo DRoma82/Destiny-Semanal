@@ -22,6 +22,10 @@ $(function () {
     fnCarregarDropdownClasses("#ddlClasse2");
     fnCarregarDropdownClasses("#ddlClasse3");
 
+    // **************************************************************
+    // Atividades
+    // **************************************************************
+
     var vMainConteudo = $("#divMainContent");
 
     var vAnoitecer = fnCriarGrupo("Anoitecer");
@@ -53,6 +57,10 @@ $(function () {
     vMainConteudo.append(vCrota);
 
     vMainConteudo.trigger('create');
+
+    // **************************************************************
+
+    //fnCarregarTodosControles();
 
 });
 
@@ -154,6 +162,8 @@ function fnFlipChange(aFlip)
 {
     aFlip = $(aFlip);
 
+    fnSalvarControle(aFlip);
+
     var vTriggerID = aFlip.attr('id');
     var vLenTrigger = vTriggerID.length;
     var vNivelTrigger = vTriggerID.substring(vLenTrigger - 2) * 1;
@@ -181,10 +191,40 @@ function fnFlipChange(aFlip)
 
 
 
-function fnConfigChars() {
+function fnConfigChars()
+{
+    fnCarregarTodosControles();
     $.mobile.changePage($("#pagConfigChars"), { transition: "flip" });
 }
 
 function fnSaveChars() {
+    $(":text").each(function () { fnSalvarControle(this); });
+    fnSalvarControle("#ddlClasse1");
+    fnSalvarControle("#ddlClasse2");
+    fnSalvarControle("#ddlClasse3");
+
     $.mobile.changePage($("#pagMain"), { transition: "flip" });
+}
+
+function fnSalvarControle(aControle)
+{
+    aControle = $(aControle);
+    window.localStorage.setItem(aControle.attr("id"), aControle.val());
+}
+
+
+
+function fnCarregarTodosControles()
+{
+    $(":text").each(function () { fnCarregarControle(this); });
+    fnCarregarControle("#ddlClasse1");
+    fnCarregarControle("#ddlClasse2");
+    fnCarregarControle("#ddlClasse3");
+    
+}
+
+function fnCarregarControle(aControle)
+{
+    aControle = $(aControle);
+    aControle.val(window.localStorage.getItem(aControle.attr("id")));
 }

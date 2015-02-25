@@ -20,11 +20,16 @@
 
 		var vStrDia = vDia.getDate() + "/" + ("0" + (vDia.getMonth() + 1)).slice(-2) + "/" + vDia.getFullYear()
 
-		//$.mobile.changePage($("#main"), {
+		//$.mobile.changePage($("#pagMain"), {
 		//    changeHash: false,
 		//    transition: "slideup"
 		//});
 
+	}
+
+	function fnConfigChars()
+	{
+	    $.mobile.changePage($("#pagConfigChars"), { transition: "flip" });
 	}
 </script>
 </head>
@@ -35,26 +40,36 @@
         <h2>Carregando...</h2>
 	</div>-->
 
-	<div data-role="page" id="main">
+	<div data-role="page" id="pagMain">
 		<div id="divMainHeader" data-role="header">
 			<h1>Destiny Semanal</h1>
 		</div>
 
+        
+
 		<div id="content" data-role="content">
-            <select id="ddlChar" data-native-menu="false">
-                <option value="1">Char 1</option>
-                <option value="2">Char 2</option>
-                <option value="3">Char 3</option>
-            </select>
+            <div>
+
+                <div style="float: left; margin-right: 10px;">
+                    <input type="button" id="btnConfigChars" onclick="fnConfigChars();" data-icon="gear" data-iconpos="notext" data-inline="true" value="Configurar Personagens" />
+                </div>
+                <div>
+                    <select id="ddlChar" data-native-menu="false">
+                        <option value="1">Char 1</option>
+                        <option value="2">Char 2</option>
+                        <option value="3">Char 3</option>
+                    </select>
+                </div>
+            </div>
 			<br />
 			<a href="#pagina_2" data-transition="flip" class="ui-btn ui-corner-all ui-shadow">Ver segunda tela</a>
 		</div>
 	</div>
 
-	<div data-role="page" data-add-back-btn="true" data-back-btn-text="Back" id="pagina_2">
+	<div data-role="page" data-add-back-btn="true" data-back-btn-text="Back" id="pagConfigChars">
 		<div data-role="header">
 			<a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button">Back</a>
-			<h1>Tela 2</h1>
+			<h1>Configurar Personagens</h1>
 		</div>
 
 		<div id="content" data-role="content">

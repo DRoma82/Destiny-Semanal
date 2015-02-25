@@ -53,6 +53,7 @@ $(function () {
     vMainConteudo.append(vCrota);
 
     vMainConteudo.trigger('create');
+
 });
 
 function fnCarregarDropdownClasses(aDDL) {
@@ -127,18 +128,54 @@ function fnCriarColuna(aTexto, aNivel) {
         }
         else
         {
-            var vFlip = $("<input />", { type: 'checkbox', id: 'chk' + aTexto + aNivel });
+            var vFlip = $("<select>", { id: 'chk' + aTexto + aNivel });
+            vFlip.append('<option value="0">' + aNivel + '</option>')
+            vFlip.append('<option value="1">' + aNivel + '</option>')
             vFlip.attr('data-role', "flipswitch");
-            vFlip.attr('data-on-text', aNivel);
-            vFlip.attr('data-off-text', aNivel);
-            vFlip.attr('data-wrapper-class', "custom-label-flipswitch");
+            //vFlip.attr('data-on-text', aNivel);
+            //vFlip.attr('data-off-text', aNivel);
+            //vFlip.attr('data-wrapper-class', "custom-label-flipswitch");
             vFlip.attr('data-mini', "true");
+            vFlip.change(fnFlipOnChangeEvent);
             vColuna.append(vFlip);
         }
             
     }
 
     return vColuna;
+}
+
+function fnFlipOnChangeEvent()
+{
+    fnFlipChange(this);
+}
+
+function fnFlipChange(aFlip)
+{
+    aFlip = $(aFlip);
+
+    var vTriggerID = aFlip.attr('id');
+    var vLenTrigger = vTriggerID.length;
+    var vNivelTrigger = vTriggerID.substring(vLenTrigger - 2) * 1;
+
+    var vIDOutro;
+    var vLenOutro;
+    var vNivelOutro;
+
+    var vOutrosFlips = $('[id^="' + vTriggerID.substring(0, vLenTrigger - 2) + '"]').not(aFlip);
+    vOutrosFlips.each(function () {
+        vIDOutro = $(this).attr('id');
+        vLenOutro = vIDOutro.length;
+        vNivelOutro = vIDOutro.substring(vLenOutro - 2) * 1;
+
+        if ((vNivelOutro < vNivelTrigger) && ($(this).val() == "0"))
+            $(this).val("1").flipswitch('refresh');
+
+        if ((vNivelOutro > vNivelTrigger) && ($(this).val() == "1")) 
+            aFlip.val("1").flipswitch('refresh');
+
+
+    });
 
 }
 

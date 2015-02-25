@@ -1,42 +1,17 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>PhoneGap Demo</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-<script type="text/javascript" charset="utf-8" src="jquery/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="jquery/jquery.mobile-1.4.5.min.js"></script>
-<link rel="stylesheet" type="text/css" href="jquery/jquery.mobile-1.4.5.min.css"/>
-<link rel="stylesheet" type="text/css" href="index.css"/>
-<script type="text/javascript" charset="utf-8">
+    <title>PhoneGap Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	document.addEventListener("deviceready", onDeviceReady, false);
-	function onDeviceReady()
-	{
-		var vDia = new Date();
-		var vDif = (vDia.getDay() + 5) % 7;
-		vDia = new Date(vDia - vDif * 24*60*60*1000);
-		vDia.setHours(0,0,0);
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="jquery/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
 
-		var vStrDia = vDia.getDate() + "/" + ("0" + (vDia.getMonth() + 1)).slice(-2) + "/" + vDia.getFullYear()
+    <link rel="stylesheet" type="text/css" href="jquery/jquery.mobile-1.4.5.min.css"/>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
 
-		//$.mobile.changePage($("#pagMain"), {
-		//    changeHash: false,
-		//    transition: "slideup"
-		//});
-
-	}
-
-	function fnConfigChars()
-	{
-	    $.mobile.changePage($("#pagConfigChars"), { transition: "flip" });
-	}
-
-	function fnSaveChars()
-	{
-	    $.mobile.changePage($("#pagMain"), { transition: "flip" });
-	}
-</script>
 </head>
 <body>
 
@@ -52,7 +27,7 @@
 
         
 
-		<div id="content" data-role="content">
+		<div id="divMainContent" data-role="content">
             <div>
                 <div style="float: left; margin-right: 10px;">
                     <input type="button" id="btnConfigChars" onclick="fnConfigChars();" data-icon="gear" data-iconpos="notext" data-inline="true" value="Configurar Personagens" />
@@ -66,72 +41,6 @@
                 </div>
             </div>
 
-            <div>
-                <div class="=ui-bar ui-bar-a">
-                    <h3 style="margin-left: 20px;">Anoitecer</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                    <div class="div3Colunas">
-                        &nbsp;
-                    </div>
-                    <div class="div3Colunas">
-                        &nbsp;
-                    </div>
-                    <div class="div3Colunas">
-                        <input type="checkbox" data-role="flipswitch" id="chkAnoitecer" data-on-text="30" data-off-text="30" data-wrapper-class="custom-label-flipswitch" data-mini="true">
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-top: 20px;">
-                <div class="=ui-bar ui-bar-a">
-                    <h3 style="margin-left: 20px;">Semanal</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-                    <div class="div3Colunas">
-                        <input type="checkbox" data-role="flipswitch" id="chkSemanal24" data-on-text="24" data-off-text="24" data-wrapper-class="custom-label-flipswitch" data-mini="true">
-                    </div>
-                    <div class="div3Colunas">
-                        <input type="checkbox" data-role="flipswitch" id="chkSemanal28" data-on-text="28" data-off-text="28" data-wrapper-class="custom-label-flipswitch" data-mini="true">
-                    </div>
-                    <div class="div3Colunas">
-                        <input type="checkbox" data-role="flipswitch" id="chkSemanal30" data-on-text="30" data-off-text="30" data-wrapper-class="custom-label-flipswitch" data-mini="true">
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-top: 20px;">
-                <div class="=ui-bar ui-bar-a">
-                    <h3 style="margin-left: 20px;">Câmara de Cristal</h3>
-                </div>
-                <div class="ui-body ui-body-a">
-
-                    <div>
-                        <div class="div3Colunas" style="text-align: left;">
-                            Espira
-                        </div>
-                        <div class="div3Colunas">
-                            <input type="checkbox" data-role="flipswitch" id="chkEspira26" data-on-text="26" data-off-text="26" data-wrapper-class="custom-label-flipswitch" data-mini="true">
-                        </div>
-                        <div class="div3Colunas">
-                            <input type="checkbox" data-role="flipswitch" id="chkEspira30" data-on-text="30" data-off-text="30" data-wrapper-class="custom-label-flipswitch" data-mini="true">
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="div3Colunas" style="text-align: left;">
-                            Teletransporte
-                        </div>
-                        <div class="div3Colunas">
-                            <input type="checkbox" data-role="flipswitch" id="chkEspira26" data-on-text="26" data-off-text="26" data-wrapper-class="custom-label-flipswitch" data-mini="true">
-                        </div>
-                        <div class="div3Colunas">
-                            <input type="checkbox" data-role="flipswitch" id="chkEspira30" data-on-text="30" data-off-text="30" data-wrapper-class="custom-label-flipswitch" data-mini="true">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 	    </div>
     </div>
 
@@ -142,7 +51,7 @@
             <button id="btnSaveChars" onclick="fnSaveChars();" class="ui-btn ui-icon-check ui-btn-icon-notext ui-corner-all ui-btn-right ui-mini">Salvar</button>
 		</div>
 
-		<div id="content" data-role="content">
+		<div data-role="content">
 			
             <div>
                 <div class="=ui-bar ui-bar-a">
@@ -151,12 +60,7 @@
                 <div class="ui-body ui-body-a">
                     <input type="text" id="txtNome1" placeholder="Nome Customizado" />
 
-                    <select id="ddlClasse1" data-native-menu="false">
-                        <option value="" data-placeholder="true">Classe:</option>
-                        <option value="T">Titã</option>
-                        <option value="C">Caçador</option>
-                        <option value="A">Arcano</option>
-                    </select>
+                    <select id="ddlClasse1" data-native-menu="false"></select>
                 </div>
             </div>
 
@@ -167,12 +71,7 @@
                 <div class="ui-body ui-body-a">
                     <input type="text" id="txtNome2" placeholder="Nome Customizado" />
 
-                    <select id="ddlClasse2" data-native-menu="false">
-                        <option value="" data-placeholder="true">Classe:</option>
-                        <option value="T">Titã</option>
-                        <option value="C">Caçador</option>
-                        <option value="A">Arcano</option>
-                    </select>
+                    <select id="ddlClasse2" data-native-menu="false"></select>
                 </div>
             </div>
 
@@ -183,12 +82,7 @@
                 <div class="ui-body ui-body-a">
                     <input type="text" id="txtNome3" placeholder="Nome Customizado" />
 
-                    <select id="ddlClasse3" data-native-menu="false">
-                        <option value="" data-placeholder="true">Classe:</option>
-                        <option value="T">Titã</option>
-                        <option value="C">Caçador</option>
-                        <option value="A">Arcano</option>
-                    </select>
+                    <select id="ddlClasse3" data-native-menu="false"></select>
                 </div>
             </div>
             

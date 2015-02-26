@@ -283,5 +283,18 @@ function fnCarregarTodosSwitches()
 
 function fnClearSemanal()
 {
-    confirm("teste");
+    if(confirm("Deseja realmente limpar todos os dados desta semana?"))
+    {
+        var vIdPersonagem;
+        $('#ddlChar > option').each(function (i1, aChar)
+        {
+            vIdPersonagem = $(aChar).val() + '';
+            $("#divMainContent").find("select").not("#ddlChar").each(function (i2, aSwitch)
+            {
+                window.localStorage.removeItem($(aSwitch).attr("id") + "§" + vIdPersonagem);
+            });
+        });
+
+        fnCarregarTodosSwitches();
+    }
 }

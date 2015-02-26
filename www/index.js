@@ -22,6 +22,8 @@ $(function () {
     fnCarregarDropdownClasses("#ddlClasse2");
     fnCarregarDropdownClasses("#ddlClasse3");
 
+    $("#ddlChar").change(fnCarregarTodosSwitches);
+
     // **************************************************************
     // Atividades
     // **************************************************************
@@ -60,19 +62,7 @@ $(function () {
 
     // **************************************************************
 
-
-
-    // **************************************************************
-    // Carregar Switches
-
-    $("#divMainContent").find("select").not("#ddlChar").each(function () {
-        fnCarregarControle(this);
-        $(this).flipswitch('refresh')
-    });
-
-    
-
-    // **************************************************************
+    fnCarregarTodosSwitches();
 
 });
 
@@ -153,6 +143,7 @@ function fnCriarColuna(aTexto, aNivel) {
             vFlip.append('<option value="1">' + aNivel + '</option>')
             vFlip.attr('data-role', "flipswitch");
             vFlip.attr('data-mini', "true");
+            vFlip.val(0);
             vFlip.change(fnFlipOnChangeEvent);
             vColuna.append(vFlip);
         }
@@ -171,7 +162,7 @@ function fnFlipChange(aFlip)
 {
     aFlip = $(aFlip);
 
-    fnSalvarControle(aFlip);
+    fnSalvarSwitch(aFlip);
 
     var vTriggerID = aFlip.attr('id');
     var vLenTrigger = vTriggerID.length;
@@ -187,7 +178,7 @@ function fnFlipChange(aFlip)
         vLenOutro = vIDOutro.length;
         vNivelOutro = vIDOutro.substring(vLenOutro - 2) * 1;
 
-        if ((vNivelOutro < vNivelTrigger) && ($(this).val() == "0"))
+        if ((vNivelOutro < vNivelTrigger) && (($(this).val() || "0") == "0"))
             $(this).val("1").flipswitch('refresh');
 
         if ((vNivelOutro > vNivelTrigger) && ($(this).val() == "1")) 
@@ -221,6 +212,12 @@ function fnSalvarControle(aControle)
     window.localStorage.setItem(aControle.attr("id"), aControle.val());
 }
 
+function fnSalvarSwitch(aSwitch)
+{
+    aSwitch = $(aSwitch);
+    var vIdPersonagem = $("#ddlChar").val();
+    window.localStorage.setItem(aSwitch.attr("id") + "§" + vIdPersonagem, aSwitch.val());
+}
 
 
 function fnCarregarTodosControles()
@@ -236,4 +233,20 @@ function fnCarregarControle(aControle)
 {
     aControle = $(aControle);
     aControle.val(window.localStorage.getItem(aControle.attr("id")));
+}
+
+function fnCarregarSwitch(aSwitch) {
+    aSwitch = $(aSwitch);
+    var vIdPersonagem = $("#ddlChar").val();
+    aSwitch.val(window.localStorage.getItem(aSwitch.attr("id") + "§" + vIdPersonagem));
+}
+
+function fnCarregarTodosSwitches()
+{
+    $("#divMainContent").find("select").not("#ddlChar").each(function () {
+        $(this).off('change');
+        fnCarregarSwitch(this);
+        $(this).flipswitch('refresh');
+        $(this).change(fnFlipOnChangeEvent);;
+    });
 }

@@ -22,6 +22,8 @@ $(function () {
     fnCarregarDropdownClasses("#ddlClasse2");
     fnCarregarDropdownClasses("#ddlClasse3");
 
+    $('#ddlChar > option').each(setNomePersonagem);
+    $("#ddlChar").selectmenu("refresh", true);
     $("#ddlChar").change(fnCarregarTodosSwitches);
 
     // **************************************************************
@@ -91,6 +93,31 @@ function fnCarregarDropdownClasses(aDDL) {
         text: 'Arcano'
     }));
 
+}
+
+function setNomePersonagem(index, aOption)
+{
+    aOption = $(aOption);
+    var vId = aOption.val() + '';
+
+    var vNomeCustom = window.localStorage.getItem("txtNome" + vId);
+    var vClasse;
+    switch (window.localStorage.getItem("ddlClasse" + vId))
+    {
+        case "A":
+            vClasse = "Arcano";
+            break;
+        case "T":
+            vClasse = "Titã";
+            break;
+        case "C":
+            vClasse = "Caçador";
+            break;
+    }
+
+    var vNome = vNomeCustom || vClasse || "Personagem " + vId;
+
+    aOption.text(vNome);
 }
 
 function fnCriarGrupo(aTitulo) {

@@ -280,3 +280,8 @@ function fnCarregarTodosSwitches()
         $(this).change(fnFlipOnChangeEvent);;
     });
 }
+
+function fnClearSemanal()
+{
+    confirm("teste");
+}

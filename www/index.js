@@ -230,6 +230,9 @@ function fnSaveChars() {
     fnSalvarControle("#ddlClasse2");
     fnSalvarControle("#ddlClasse3");
 
+    $('#ddlChar > option').each(setNomePersonagem);
+    $("#ddlChar").selectmenu("refresh", true);
+
     $.mobile.changePage($("#pagMain"), { transition: "flip" });
 }
 

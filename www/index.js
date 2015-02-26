@@ -60,7 +60,19 @@ $(function () {
 
     // **************************************************************
 
-    //fnCarregarTodosControles();
+
+
+    // **************************************************************
+    // Carregar Switches
+
+    $("#divMainContent").find("select").not("#ddlChar").each(function () {
+        fnCarregarControle(this);
+        $(this).flipswitch('refresh')
+    });
+
+    
+
+    // **************************************************************
 
 });
 
@@ -140,9 +152,6 @@ function fnCriarColuna(aTexto, aNivel) {
             vFlip.append('<option value="0">' + aNivel + '</option>')
             vFlip.append('<option value="1">' + aNivel + '</option>')
             vFlip.attr('data-role', "flipswitch");
-            //vFlip.attr('data-on-text', aNivel);
-            //vFlip.attr('data-off-text', aNivel);
-            //vFlip.attr('data-wrapper-class', "custom-label-flipswitch");
             vFlip.attr('data-mini', "true");
             vFlip.change(fnFlipOnChangeEvent);
             vColuna.append(vFlip);

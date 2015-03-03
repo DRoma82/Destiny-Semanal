@@ -26,7 +26,8 @@ $(function () {
     $("#ddlChar").selectmenu("refresh", true);
     $("#ddlChar").change(fnCarregarTodosSwitches);
 
-    
+    $("#popObterIdRede").trigger('create').popup();
+
     // **************************************************************
     // Atividades
     // **************************************************************
@@ -66,6 +67,8 @@ $(function () {
     // **************************************************************
 
     fnCarregarTodosSwitches();
+
+    
 
 });
 
@@ -227,39 +230,76 @@ var vTeste;
 
 function fnAbrirTelaDownloadChar(aChar)
 {
-    var vTipoRede = 1;
 
     //var vIdRede = 'DRoma82';
-    var vIdRede = 'DuckyUniverseCX';
+    //var vIdRede = 'DuckyUniverseCX';
 
-    //fnObterMemeberID(vTipoRede, vIdRede, function (aMemberID, aErro) {
-    //    if (aMemberID != null)
-    //        alert(aMemberID);
-    //    else
-    //        alert('Erro: ' + aErro);
-    //});
-
-    $("#popObterIdRede").trigger('create').popup().popup('open');
+    $("#btnBaixarIdRede").data('CharIndex', aChar);
+    $("#popObterIdRede").popup().popup('open');
 }
 
-function fnObterMemeberID(aTipoRede, aIdRede, aCallback)
+function btnBaixarIdRede_click(aBotao)
+{
+    var vTipoRede = $("#ddlTipoRede").val();
+    var vIdRede = $("#txtIdRede").val().replace(/ /g, '');
+
+    if (vIdRede === '')
+    {
+        alert("Informe o ID na rede.");
+        return;
+    }
+
+    var vRetornoMemberID = fnObterMemeberID(vTipoRede, vIdRede);
+    
+    if (vRetornoMemberID.Sucesso)
+        alert(vRetornoMemberID.MemberID)
+    else
+        alert("Erro: " + vRetornoMemberID.Mensagem);
+
+    aBotao = $(aBotao);
+
+
+    
+}
+
+function fnObterMemeberID(aTipoRede, aIdRede)
 {
     var vURLIdRede = 'http://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/' + aTipoRede + '/' + aIdRede + '/';
 
+    var vRetorno = {
+        Sucesso: false,
+        MemberID: null,
+        Mensagem: null
+    };
+
+    $.mobile.loading('show');
+
     $.ajax({
+        type: 'GET',
         url: vURLIdRede,
+        async: false,
+        cache: false,
+        timeout: 5000,
         success: function (aResultado)
         {
-            if(aResultado.ErrorCode == "1" && aResultado.Response.length > 0)
-                aCallback(aResultado.Response[0].membershipId, null)
+            if (aResultado.ErrorCode == "1" && aResultado.Response.length > 0)
+            {
+                vRetorno.MemberID = aResultado.Response[0].membershipId;
+                vRetorno.Sucesso = true;
+            }
+                
             else
-                aCallback(null,'Usuário não encontrado!')
+                vRetorno.Mensagem = 'Usuário não encontrado!';
         },
         error: function()
         {
-            aCallback(null, 'Erro ao contactar servidores da Bungie.')
+            vRetorno.Mensagem = 'Erro ao contactar servidores da Bungie.';
         }
     });
+
+    $.mobile.loading('hide');
+
+    return vRetorno;
 
 }
 

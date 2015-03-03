@@ -1,3 +1,5 @@
+var vTeste;
+
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
@@ -27,6 +29,10 @@ $(function () {
     $("#ddlChar").change(fnCarregarTodosSwitches);
 
     $("#popObterIdRede").trigger('create').popup();
+    fnCarregarControle('#ddlTipoRede');
+    fnCarregarControle('#txtIdRede');
+    $('#ddlTipoRede').flipswitch('refresh');
+
 
     // **************************************************************
     // Atividades
@@ -226,21 +232,20 @@ function fnConfigChars()
     $.mobile.changePage($("#pagConfigChars"), { transition: "flip" });
 }
 
-var vTeste;
+
 
 function fnAbrirTelaDownloadChar(aChar)
 {
 
     //var vIdRede = 'DRoma82';
     //var vIdRede = 'DuckyUniverseCX';
-
     $("#btnBaixarIdRede").data('CharIndex', aChar);
     $("#popObterIdRede").popup().popup('open');
 }
 
 function btnBaixarIdRede_click(aBotao)
 {
-    var vTipoRede = $("#ddlTipoRede").val();
+    var vTipoRede = ($("#ddlTipoRede").val() || '2');
     var vIdRede = $("#txtIdRede").val().replace(/ /g, '');
 
     if (vIdRede === '')
@@ -251,14 +256,30 @@ function btnBaixarIdRede_click(aBotao)
 
     var vRetornoMemberID = fnObterMemeberID(vTipoRede, vIdRede);
     
-    if (vRetornoMemberID.Sucesso)
-        alert(vRetornoMemberID.MemberID)
-    else
+    if (!vRetornoMemberID.Sucesso)
+    {
         alert("Erro: " + vRetornoMemberID.Mensagem);
+        return;
+    }
+
+    $("#txtIdRede").val(vRetornoMemberID.DisplayName);
+    fnSalvarControle('#ddlTipoRede');
+    fnSalvarControle('#txtIdRede');
 
     aBotao = $(aBotao);
+    var vCharIndex = aBotao.data('CharIndex');
 
+    var vDadosPersonagem = fnObterPersonagem(vTipoRede, vRetornoMemberID.MemberID, vCharIndex);
 
+    if (!vDadosPersonagem.Sucesso) {
+        alert("Erro: " + vDadosPersonagem.Mensagem);
+        return;
+    }
+
+    $("#txtNome" + vCharIndex).val(vDadosPersonagem.NomeCustomizado);
+    $("#ddlClasse" + vCharIndex).val(vDadosPersonagem.IdClasse).selectmenu('refresh', true);
+
+    $("#popObterIdRede").popup('close');
     
 }
 
@@ -269,6 +290,7 @@ function fnObterMemeberID(aTipoRede, aIdRede)
     var vRetorno = {
         Sucesso: false,
         MemberID: null,
+        DisplayName: null,
         Mensagem: null
     };
 
@@ -285,9 +307,10 @@ function fnObterMemeberID(aTipoRede, aIdRede)
             if (aResultado.ErrorCode == "1" && aResultado.Response.length > 0)
             {
                 vRetorno.MemberID = aResultado.Response[0].membershipId;
+                vRetorno.DisplayName = aResultado.Response[0].displayName;
                 vRetorno.Sucesso = true;
+                vTeste = aResultado;
             }
-                
             else
                 vRetorno.Mensagem = 'Usuário não encontrado!';
         },
@@ -302,6 +325,107 @@ function fnObterMemeberID(aTipoRede, aIdRede)
     return vRetorno;
 
 }
+
+
+function fnObterPersonagem(aTipoRede, aMemberID, aIndicePersonagem) {
+    var vURLIdRede = 'http://www.bungie.net/platform/Destiny/' + aTipoRede + '/Account/' + aMemberID + '/';
+
+    var vRetorno = {
+        Sucesso: false,
+        IdClasse: null,
+        NomeClasse: null,
+        NomeRaca: null,
+        NomeCustomizado: null,
+        TempoTotal: 0,
+        Mensagem: null
+    };
+
+    $.mobile.loading('show');
+
+    $.ajax({
+        type: 'GET',
+        url: vURLIdRede,
+        async: false,
+        cache: false,
+        timeout: 10000,
+        success: function (aResultado) {
+            vTeste = aResultado;
+            if (aResultado.ErrorCode == "1")
+            {
+                if (aResultado.Response.data.characters.length < aIndicePersonagem)
+                {
+                    vRetorno.Mensagem = "Este usuário não tem um Personagem " + aIndicePersonagem;
+                }
+                else
+                {
+                    var vTodosPersonagens = aResultado.Response.data.characters;
+                    vTodosPersonagens.sort(function (a, b) { return a.characterBase.characterId - b.characterBase.characterId });
+
+                    var _SexoMasculino = 0;
+                    var _SexoFeminino = 1;
+
+                    var _ClasseTitan = 0;
+                    var _ClasseCacador = 1;
+                    var _ClasseArcano = 2;
+
+                    var _RacaHumano = 3887404748;
+                    var _RacaExo =  898834093;
+                    var _RacaDesperto = 2803282938;
+
+                    var vDados = vTodosPersonagens[aIndicePersonagem - 1].characterBase;
+                    var vSexo = vDados.genderType;
+                    var vClasse = vDados.classType;
+                    var vRaca = vDados.raceHash;
+
+                    if (vClasse == _ClasseTitan)
+                    {
+                        vRetorno.IdClasse = 'T';
+                        vRetorno.NomeClasse = 'Titã';
+                    }
+
+                    if (vClasse == _ClasseCacador)
+                    {
+                        vRetorno.IdClasse = 'C';
+                        vRetorno.NomeClasse = (vSexo == _SexoMasculino ? "Caçador" : "Caçadora");
+                    }
+
+                    if (vClasse == _ClasseArcano)
+                    {
+                        vRetorno.IdClasse = 'A';
+                        vRetorno.NomeClasse = (vSexo == _SexoMasculino ? "Arcano" : "Arcana");
+                    }
+
+                    if (vRaca == _RacaHumano)
+                        vRetorno.NomeRaca = (vSexo == _SexoMasculino ? "Humano" : "Humana");
+
+                    if (vRaca == _RacaExo)
+                        vRetorno.NomeRaca = "Exo " + (vSexo == _SexoMasculino ? "Macho" : "Fêmea");
+
+                    if (vRaca == _RacaDesperto)
+                        vRetorno.NomeRaca = (vSexo == _SexoMasculino ? "Desperto" : "Desperta");
+
+                    vRetorno.NomeCustomizado = vRetorno.NomeClasse + ' ' + vRetorno.NomeRaca;
+
+                    vRetorno.TempoTotal = vDados.minutesPlayedTotal;
+
+                    vRetorno.Sucesso = true;
+                    vTeste = aResultado;
+                }
+            }
+            else
+                vRetorno.Mensagem = 'Erro ao carregar personagem!';
+        },
+        error: function () {
+            vRetorno.Mensagem = 'Erro ao contactar servidores da Bungie.';
+        }
+    });
+
+    $.mobile.loading('hide');
+
+    return vRetorno;
+
+}
+
 
 
 function fnSaveChars() {
@@ -377,3 +501,4 @@ function fnClearSemanal()
         fnCarregarTodosSwitches();
     }
 }
+

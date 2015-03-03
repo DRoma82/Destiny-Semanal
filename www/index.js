@@ -239,7 +239,12 @@ function fnAbrirTelaDownloadChar(aChar)
 
     //var vIdRede = 'DRoma82';
     //var vIdRede = 'DuckyUniverseCX';
-    $("#btnBaixarIdRede").data('CharIndex', aChar);
+    fnObterMemeberID(function (aDadosMemberID) { fnObterPersonagem(aDadosMemberID, aChar); });
+}
+
+function fnObterMemeberID(aCallBack)
+{
+    $("#btnBaixarIdRede").data('callback', aCallBack);
     $("#popObterIdRede").popup().popup('open');
 }
 
@@ -254,7 +259,7 @@ function btnBaixarIdRede_click(aBotao)
         return;
     }
 
-    var vRetornoMemberID = fnObterMemeberID(vTipoRede, vIdRede);
+    var vRetornoMemberID = fnDownloadMemeberID(vTipoRede, vIdRede);
     
     if (!vRetornoMemberID.Sucesso)
     {
@@ -267,28 +272,18 @@ function btnBaixarIdRede_click(aBotao)
     fnSalvarControle('#txtIdRede');
 
     aBotao = $(aBotao);
-    var vCharIndex = aBotao.data('CharIndex');
-
-    var vDadosPersonagem = fnObterPersonagem(vTipoRede, vRetornoMemberID.MemberID, vCharIndex);
-
-    if (!vDadosPersonagem.Sucesso) {
-        alert("Erro: " + vDadosPersonagem.Mensagem);
-        return;
-    }
-
-    $("#txtNome" + vCharIndex).val(vDadosPersonagem.NomeCustomizado);
-    $("#ddlClasse" + vCharIndex).val(vDadosPersonagem.IdClasse).selectmenu('refresh', true);
-
+    aBotao.data('callback')(vRetornoMemberID);
     $("#popObterIdRede").popup('close');
     
 }
 
-function fnObterMemeberID(aTipoRede, aIdRede)
+function fnDownloadMemeberID(aTipoRede, aIdRede)
 {
     var vURLIdRede = 'http://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/' + aTipoRede + '/' + aIdRede + '/';
 
     var vRetorno = {
         Sucesso: false,
+        TipoRede: null,
         MemberID: null,
         DisplayName: null,
         Mensagem: null
@@ -306,6 +301,7 @@ function fnObterMemeberID(aTipoRede, aIdRede)
         {
             if (aResultado.ErrorCode == "1" && aResultado.Response.length > 0)
             {
+                vRetorno.TipoRede = aTipoRede;
                 vRetorno.MemberID = aResultado.Response[0].membershipId;
                 vRetorno.DisplayName = aResultado.Response[0].displayName;
                 vRetorno.Sucesso = true;
@@ -326,8 +322,20 @@ function fnObterMemeberID(aTipoRede, aIdRede)
 
 }
 
+function fnObterPersonagem(aDadosMemberID, aCharIndex)
+{
+    var vDadosPersonagem = fnDownloadPersonagem(aDadosMemberID.TipoRede, aDadosMemberID.MemberID, aCharIndex);
 
-function fnObterPersonagem(aTipoRede, aMemberID, aIndicePersonagem) {
+    if (!vDadosPersonagem.Sucesso) {
+        alert("Erro: " + vDadosPersonagem.Mensagem);
+        return;
+    }
+
+    $("#txtNome" + aCharIndex).val(vDadosPersonagem.NomeCustomizado);
+    $("#ddlClasse" + aCharIndex).val(vDadosPersonagem.IdClasse).selectmenu('refresh', true);
+}
+
+function fnDownloadPersonagem(aTipoRede, aMemberID, aIndicePersonagem) {
     var vURLIdRede = 'http://www.bungie.net/platform/Destiny/' + aTipoRede + '/Account/' + aMemberID + '/';
 
     var vRetorno = {

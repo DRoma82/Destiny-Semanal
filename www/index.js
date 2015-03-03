@@ -216,13 +216,52 @@ function fnFlipChange(aFlip)
 
 }
 
-
-
 function fnConfigChars()
 {
     fnCarregarTodosControles();
     $.mobile.changePage($("#pagConfigChars"), { transition: "flip" });
 }
+
+var vTeste;
+
+function fnAbrirTelaDownloadChar(aChar)
+{
+    var vTipoRede = 1;
+
+    //var vIdRede = 'DRoma82';
+    var vIdRede = 'DuckyUniverseCX';
+
+    //fnObterMemeberID(vTipoRede, vIdRede, function (aMemberID, aErro) {
+    //    if (aMemberID != null)
+    //        alert(aMemberID);
+    //    else
+    //        alert('Erro: ' + aErro);
+    //});
+
+    $("#popObterIdRede").popup().popup('open');
+}
+
+function fnObterMemeberID(aTipoRede, aIdRede, aCallback)
+{
+    var vURLIdRede = 'http://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/' + aTipoRede + '/' + aIdRede + '/';
+
+    $.ajax({
+        url: vURLIdRede,
+        success: function (aResultado)
+        {
+            if(aResultado.ErrorCode == "1" && aResultado.Response.length > 0)
+                aCallback(aResultado.Response[0].membershipId, null)
+            else
+                aCallback(null,'Usuário não encontrado!')
+        },
+        error: function()
+        {
+            aCallback(null, 'Erro ao contactar servidores da Bungie.')
+        }
+    });
+
+}
+
 
 function fnSaveChars() {
     $(":text").each(function () { fnSalvarControle(this); });
@@ -248,7 +287,6 @@ function fnSalvarSwitch(aSwitch)
     var vIdPersonagem = $("#ddlChar").val();
     window.localStorage.setItem(aSwitch.attr("id") + "§" + vIdPersonagem, aSwitch.val());
 }
-
 
 function fnCarregarTodosControles()
 {

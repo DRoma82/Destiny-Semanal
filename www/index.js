@@ -305,7 +305,6 @@ function fnDownloadMemeberID(aTipoRede, aIdRede)
                 vRetorno.MemberID = aResultado.Response[0].membershipId;
                 vRetorno.DisplayName = aResultado.Response[0].displayName;
                 vRetorno.Sucesso = true;
-                vTeste = aResultado;
             }
             else
                 vRetorno.Mensagem = 'Usuário não encontrado!';
@@ -336,7 +335,7 @@ function fnObterPersonagem(aDadosMemberID, aCharIndex)
 }
 
 function fnDownloadPersonagem(aTipoRede, aMemberID, aIndicePersonagem) {
-    var vURLIdRede = 'http://www.bungie.net/platform/Destiny/' + aTipoRede + '/Account/' + aMemberID + '/';
+    var vURLDadosPersonagem = 'http://www.bungie.net/platform/Destiny/' + aTipoRede + '/Account/' + aMemberID + '/';
 
     var vRetorno = {
         Sucesso: false,
@@ -352,12 +351,11 @@ function fnDownloadPersonagem(aTipoRede, aMemberID, aIndicePersonagem) {
 
     $.ajax({
         type: 'GET',
-        url: vURLIdRede,
+        url: vURLDadosPersonagem,
         async: false,
         cache: false,
         timeout: 10000,
         success: function (aResultado) {
-            vTeste = aResultado;
             if (aResultado.ErrorCode == "1")
             {
                 if (aResultado.Response.data.characters.length < aIndicePersonagem)
@@ -417,7 +415,6 @@ function fnDownloadPersonagem(aTipoRede, aMemberID, aIndicePersonagem) {
                     vRetorno.TempoTotal = vDados.minutesPlayedTotal;
 
                     vRetorno.Sucesso = true;
-                    vTeste = aResultado;
                 }
             }
             else
@@ -508,5 +505,48 @@ function fnClearSemanal()
 
         fnCarregarTodosSwitches();
     }
+}
+
+function fnAbrirTelaTempoJogo()
+{
+    fnObterMemeberID(fnSomarTempoJogo);
+}
+
+function fnSomarTempoJogo(aDadosMemberID)
+{
+    var vURLDadosPersonagem = 'http://www.bungie.net/platform/Destiny/' + aDadosMemberID.TipoRede + '/Account/' + aDadosMemberID.MemberID + '/';
+
+
+    $.mobile.loading('show');
+
+    $.ajax({
+        type: 'GET',
+        url: vURLDadosPersonagem,
+        async: false,
+        cache: false,
+        timeout: 10000,
+        success: function (aResultado) {
+            if (aResultado.ErrorCode == "1") {
+                var vTodosPersonagens = $(aResultado.Response.data.characters);
+                var vSoma = 0;
+
+                vTeste = vTodosPersonagens;
+                
+                vTodosPersonagens.each(function () {
+                    vSoma += (this.characterBase.minutesPlayedTotal * 1);
+                });
+
+                alert("Tempo total de jogo: " + Math.ceil((vSoma / 60), 0) + " Horas");
+
+            }
+            else
+                alert('Erro ao carregar personagens!');
+        },
+        error: function () {
+            alert('Erro ao contactar servidores da Bungie.');
+        }
+    });
+
+    $.mobile.loading('hide');
 }
 

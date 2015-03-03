@@ -26,6 +26,7 @@ $(function () {
     $("#ddlChar").selectmenu("refresh", true);
     $("#ddlChar").change(fnCarregarTodosSwitches);
 
+    
     // **************************************************************
     // Atividades
     // **************************************************************
@@ -238,7 +239,7 @@ function fnAbrirTelaDownloadChar(aChar)
     //        alert('Erro: ' + aErro);
     //});
 
-    $("#popObterIdRede").popup().popup('open');
+    $("#popObterIdRede").trigger('create').popup().popup('open');
 }
 
 function fnObterMemeberID(aTipoRede, aIdRede, aCallback)

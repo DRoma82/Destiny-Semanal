@@ -100,7 +100,17 @@
 	</div>
 
     <div id="popObterIdRede" data-role="popup" data-theme="a" data-overlay-theme="b" class="ui-content">
-        Dados do Personagem
+        <div style="float: left; line-height: 48px;"><label for="ddlTipoRede">Rede:</label></div>
+        <div style="float: right">
+            <select id="ddlTipoRede" data-role="flipswitch" data-inline="true">
+                <option value="2">PSN</option>
+                <option value="1">Live</option>
+            </select>
+        </div>
+        <div style="clear: both; width: 300px;">
+            <input type="text" id="txtIdRede" placeholder="ID na Rede" />
+        </div>
+        
     </div>
 
 </body>
